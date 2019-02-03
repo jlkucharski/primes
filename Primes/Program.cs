@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 
 namespace Primes
@@ -6,6 +7,16 @@ namespace Primes
 	class Program
 	{
 		static void Main(string[] args)
+		{
+			var menu = new ActionController(new Dictionary<string, Action>()
+			{
+				{"Find primes in range", () => { FindPrimesInRange(); } }
+			});
+
+			menu.ProcessInput();
+		}
+
+		static void FindPrimesInRange()
 		{
 			Console.WriteLine("Provide max");
 			var line = Console.ReadLine();
@@ -28,7 +39,6 @@ namespace Primes
 
 			Console.WriteLine();
 			Console.WriteLine($"Found {primeCount} primes smaller than {max} in {stopwatch.ElapsedMilliseconds}ms.");
-			Console.ReadKey();
 		}
 
 		static bool IsPrime(int value)
@@ -37,7 +47,7 @@ namespace Primes
 
 			int maxj = (int)Math.Floor(value / 2d);
 
-			for (int j = 3; j < maxj; j++)
+			for (int j = 3; j < maxj; j += 2)
 			{
 				if (value % j == 0)
 				{
