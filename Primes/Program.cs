@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Numerics;
 
 namespace Primes
 {
@@ -22,7 +23,7 @@ namespace Primes
 		{
 			Console.WriteLine("Provide a number to check");
 			var line = Console.ReadLine();
-			ulong number = ulong.Parse(line);
+			BigInteger number = BigInteger.Parse(line);
 			Stopwatch stopwatch = new Stopwatch();
 
 			Console.WriteLine($"Trying to find out if {number} is prime...");
@@ -47,14 +48,14 @@ namespace Primes
 		{
 			Console.WriteLine("Provide number of primes to find.");
 			var line = Console.ReadLine();
-			ulong max = ulong.Parse(line);
-			ulong primeCount = 0;
+			BigInteger max = BigInteger.Parse(line);
+			BigInteger primeCount = 0;
 			Stopwatch stopwatch = new Stopwatch();
 
 			Console.WriteLine($"Trying to find {max} primes lower...");
 
 			stopwatch.Start();
-			for (ulong i = 3; primeCount < max; i += 2)
+			for (BigInteger i = 3; primeCount < max; i += 2)
 			{
 				if (IsPrime(i))
 				{
@@ -73,14 +74,14 @@ namespace Primes
 		{
 			Console.WriteLine("Provide max");
 			var line = Console.ReadLine();
-			ulong max = ulong.Parse(line);
-			ulong primeCount = 0;
+			BigInteger max = BigInteger.Parse(line);
+			BigInteger primeCount = 0;
 			Stopwatch stopwatch = new Stopwatch();
 
 			Console.WriteLine($"Trying to find primes lower or equal to {max}...");
 
 			stopwatch.Start();
-			for (ulong i = 3; i <= max; i += 2)
+			for (BigInteger i = 3; i <= max; i += 2)
 			{
 				if (IsPrime(i))
 				{
@@ -94,13 +95,13 @@ namespace Primes
 			Console.WriteLine($"Found {primeCount} primes smaller than {max} in {stopwatch.ElapsedMilliseconds}ms.");
 		}
 
-		static bool IsPrime(ulong value)
+		static bool IsPrime(BigInteger value)
 		{
 			if (value < 3) return false;
 
-			ulong maxj = (ulong)Math.Floor(value / 2d);
+			BigInteger maxj = value >> 1;
 
-			for (ulong j = 3; j < maxj; j += 2)
+			for (BigInteger j = 3; j < maxj; j += 2)
 			{
 				if (value % j == 0)
 				{
