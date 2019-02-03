@@ -10,24 +10,50 @@ namespace Primes
 		{
 			var menu = new ActionController(new Dictionary<string, Action>()
 			{
+				{"Is a number prime?", () => {IsNumberPrime(); } },
 				{"Find primes in range", () => { FindPrimesInRange(); } }
 			});
 
 			menu.ProcessInput();
 		}
 
+		static void IsNumberPrime()
+		{
+			Console.WriteLine("Provide a number to check");
+			var line = Console.ReadLine();
+			ulong number = ulong.Parse(line);
+			Stopwatch stopwatch = new Stopwatch();
+
+			Console.WriteLine($"Trying to find out if {number} is prime...");
+
+			stopwatch.Start();
+			bool isPrime = IsPrime(number);
+			stopwatch.Stop();
+
+			if (isPrime)
+			{
+				Console.WriteLine($"{number} is a prime number.");
+			}
+			else
+			{
+				Console.WriteLine($"{number} is not a prime number.");
+			}
+
+			Console.WriteLine($"Found out in {stopwatch.ElapsedMilliseconds}ms.");
+		}
+
 		static void FindPrimesInRange()
 		{
 			Console.WriteLine("Provide max");
 			var line = Console.ReadLine();
-			int max = int.Parse(line);
-			int primeCount = 0;
+			ulong max = ulong.Parse(line);
+			ulong primeCount = 0;
 			Stopwatch stopwatch = new Stopwatch();
 
 			Console.WriteLine($"Trying to find primes lower or equal to {max}...");
 
 			stopwatch.Start();
-			for (int i = 3; i <= max; i += 2)
+			for (ulong i = 3; i <= max; i += 2)
 			{
 				if (IsPrime(i))
 				{
@@ -41,13 +67,13 @@ namespace Primes
 			Console.WriteLine($"Found {primeCount} primes smaller than {max} in {stopwatch.ElapsedMilliseconds}ms.");
 		}
 
-		static bool IsPrime(int value)
+		static bool IsPrime(ulong value)
 		{
 			if (value < 3) return false;
 
-			int maxj = (int)Math.Floor(value / 2d);
+			ulong maxj = (ulong)Math.Floor(value / 2d);
 
-			for (int j = 3; j < maxj; j += 2)
+			for (ulong j = 3; j < maxj; j += 2)
 			{
 				if (value % j == 0)
 				{

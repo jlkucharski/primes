@@ -53,7 +53,7 @@ namespace Primes
 
 			sb.AppendLine("Choose an action number or press q to exit.");
 
-			Console.WriteLine(sb.ToString());
+			Console.Write(sb.ToString());
 		}
 	}
 }
